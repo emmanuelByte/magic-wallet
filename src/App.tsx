@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { VStack } from "@chakra-ui/react";
+import { useUser } from "./context/UserContext";
+import ConnectButton from "./components/ConnectButton";
+import WalletDetail from "./components/WalletDetail";
+import DisconnectButton from "./components/DisconnectButton";
+import ShowUIButton from "./components/ShowUIButton";
+import SignMessage from "./components/SignMessage";
 
 function App() {
+  // Use the UserContext to get the current logged-in user
+  const { user } = useUser();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <VStack justifyContent="center" alignItems="center" minH="100vh">
+      {/* If no user is available, display the Connect button.
+          Otherwise, display the Wallet details, Sign Message Component, Disconnect button, and ShowUI button. */}
+      {!user ? (
+        <ConnectButton />
+      ) : (
+        <>
+          <WalletDetail />
+          <SignMessage />
+          <ShowUIButton />
+
+          <DisconnectButton />
+        </>
+      )}
+    </VStack>
   );
 }
 
